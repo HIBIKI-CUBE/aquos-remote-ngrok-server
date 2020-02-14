@@ -1,14 +1,15 @@
 const webapp = require("express")();
 const Aquos = require("../sharp-aquos-remote-control/lib/aquos").Aquos;
 const fs = require("fs");
+const config = JSON.parse(fs.readFileSync('config.json', 'utf-8'));
 
 // AQUOS接続のための設定
 // TODO: IPアドレス、ポート番号、ユーザーID、パスワードを入力する
 const control = new Aquos(
   "192.168.0.55",
   10002,
-  process.env.aquosID,
-  process.env.aquosPass
+  config.id,
+  config.pass
 );
 
 // 電源をつける操作のエンドポイント
