@@ -1,46 +1,43 @@
-var ngrok = require('ngrok');
-var express = require('express');
-var Aquos = require('sharp-aquos-remote-control').Aquos;
+var webapp = require("express")();
+var Aquos = require("../sharp-aquos-remote-control/lib/aquos").Aquos;
 
 // AQUOS接続のための設定
 // TODO: IPアドレス、ポート番号、ユーザーID、パスワードを入力する
-var gw = new Aquos('192.168.xxx.xxx', 10002, 'UserID', 'Password');
-var webapp = express();
+var control = new Aquos(
+  "192.168.0.55",
+  10002,
+  process.env.aquosID,
+  process.env.aquosPass
+);
 
-// 電源をつける操作のエンドポイント 
-webapp.get('/turnon', function(req, res) {
-    gw.power(true, function(err, data) {
-        console.log("power on.");
-        res.send("power on finished.");
-        return;
-    });
+// 電源をつける操作のエンドポイント
+webapp.get("/turnon", function(req, res) {
+  control.power(true, function(err, data) {
+    console.log("power on.");
+    res.status(200).send("");
+    return;
+  });
 });
 
-// 電源を消す操作のエンドポイント 
-webapp.get('/turnoff', function(req, res) {
-    gw.power(false, function(err, data) {
-        console.log("power off.");
-        res.send("power off finished.");
-        return;
-    });
+// 電源を消す操作のエンドポイント
+webapp.get("/turnoff", function(req, res) {
+  control.power(false, function(err, data) {
+    console.log("power off.");
+    res.status(200).send("");
+    return;
+  });
 });
 
-// サーバーの作成及び、ngrokを使用してサーバーを公開する
+// サーバーの作成
 var server = webapp.listen(process.env.EXPRESS_PORT, function() {
-    var host = server.address().address,
-        port = server.address().port;
+  var host = server.address().address,
+    port = server.address().port;
 
-    console.log('listening at http://%s:%s', host, port);
-    ngrok.connect({
-        port: port
-    },
-    function (err, url) {
-        gw.connect(function(err) {
-            if (err) {
-                console.log(err);
-                return;
-            }
-        });
-        console.log(url);
-    });
+  console.log("listening at http://%s:%s", host, port);
+  control.connect(function(err) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+  });
 });
