@@ -107,6 +107,23 @@ app.get("/volume", (req, res) => {
   }
 });
 
+app.get("/input", (req, res) => {
+  if (1 <= Number(req.query.v) && Number(req.query.v) <= 5) {
+    control.input(Number(req.query.v), (err, data) => {
+      console.log("Set input " + String(req.query.v));
+      res.send("Set input " + String(req.query.v));
+      return;
+    });
+  } else {
+    control.input(null, (err, data) => {
+      console.log("Return input status");
+      console.log(data);
+      res.send(data);
+      return;
+    })
+  }
+})
+
 // サーバーの作成
 const server = app.listen(55555, () => {
   var host = server.address().address,
