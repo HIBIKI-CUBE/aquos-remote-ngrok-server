@@ -1,9 +1,10 @@
-var webapp = require("express")();
-var Aquos = require("../sharp-aquos-remote-control/lib/aquos").Aquos;
+const webapp = require("express")();
+const Aquos = require("../sharp-aquos-remote-control/lib/aquos").Aquos;
+const fs = require("fs");
 
 // AQUOS接続のための設定
 // TODO: IPアドレス、ポート番号、ユーザーID、パスワードを入力する
-var control = new Aquos(
+const control = new Aquos(
   "192.168.0.55",
   10002,
   process.env.aquosID,
@@ -29,7 +30,7 @@ webapp.get("/turnoff", function(req, res) {
 });
 
 // サーバーの作成
-var server = webapp.listen(process.env.EXPRESS_PORT, function() {
+const server = webapp.listen(process.env.EXPRESS_PORT, function() {
   var host = server.address().address,
     port = server.address().port;
 
