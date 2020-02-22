@@ -10,7 +10,6 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.2",
-    "ngrok": "^2.2.23",
     "sharp-aquos-remote-control": "github:benburkhart1/sharp-aquos-remote-control"
   }
 }

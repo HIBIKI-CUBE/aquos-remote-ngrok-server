@@ -39,7 +39,7 @@ app.get("/power", (req, res) => {
     control.power(null, (err, data) => {
       console.log("Return power status");
       console.log(data);
-      res.send(data[0]);
+      res.send(String(Number(data)));
       return;
     });
   }
@@ -75,9 +75,9 @@ app.get("/channel", (req, res) => {
     control.channel(null, (err, data) => {
       console.log("Return channel status");
       console.log(data);
-      res.send(data);
+      res.send(String(Number(data)));
       return;
-    })
+    });
   }
 });
 
@@ -88,7 +88,7 @@ app.get("/volume", (req, res) => {
       res.send("Set volume " + String(req.query.v));
       return;
     });
-  } else if (req.query.v.toLowerCase() == "up") {
+  } else if (req.query.v == "up") {
     control.volume(null, (err, data) => {
       control.volume(Number(data)+1, (err, data2) => {
         console.log("Set volume " + String(Number(data)+1));
@@ -96,13 +96,20 @@ app.get("/volume", (req, res) => {
         return;
       })
     });
-  } else if (req.query.v.toLowerCase() == "down") {
+  } else if (req.query.v == "down") {
     control.volume(null, (err, data) => {
       control.volume(Number(data)-1, (err, data2) => {
         console.log("Set volume " + String(Number(data)-1));
         res.send("Set volume " + String(Number(data)-1));
         return;
       })
+    });
+  } else {
+    control.volume(null, (err, data) => {
+      console.log("Return volume status");
+      console.log(typeof data);
+      res.send(String(Number(data)));
+      return;
     });
   }
 });
@@ -118,7 +125,7 @@ app.get("/input", (req, res) => {
     control.input(null, (err, data) => {
       console.log("Return input status");
       console.log(data);
-      res.send(data);
+      res.send(String(Number(data)));
       return;
     })
   }
