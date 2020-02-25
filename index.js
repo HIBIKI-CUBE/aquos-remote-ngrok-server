@@ -1,4 +1,6 @@
+const bodyParser = require('body-parser');
 const app = require("express")();
+app.use(bodyParser.urlencoded({ extended: true }));
 const Aquos = require("../sharp-aquos-remote-control/lib/aquos").Aquos;
 const fs = require("fs");
 const config = JSON.parse(fs.readFileSync('config.json', 'utf-8'));
@@ -11,6 +13,125 @@ const control = new Aquos(
   config.id,
   config.pass
 );
+
+app.post("/", (req, res, next) => {
+  console.log(req.body.v);
+  const request = {
+    power: req.body.power,
+    volume: req.body.volume,
+    channel: req.body.channel,
+    input: req.body.input
+  }
+  if (power == "check") {
+    control.power(null, (err, data) => {
+      console.log("Return power status");
+      console.log(data);
+      res.send(String(Number(data)));
+      return;
+    });
+  } else if (request.power = "on") {
+    control.power(true, (err, data) => {
+      console.log("Power on");
+      res.sendStatus("202");
+      return;
+    });
+  } else if (request.power == "off") {
+    control.power(false, (err, data) => {
+      console.log("Power off");
+      res.sendStatus("202");
+      return;
+    });
+  } else if (request.power == "toggle") {
+    control.power(null, (err, data) => {
+      console.log("Toggle power");
+      control.power(!Number(data), (err, data2) => {
+        console.log(!Number(data)?"Power on":"Power off")
+        res.send(String(Number(data)));
+        return;
+      });
+    });
+  }
+
+  if (request.channel == "check") {
+    control.channel(null, (err, data) => {
+      console.log("Return channel status");
+      console.log(data);
+      res.send(String(Number(data)));
+      return;
+    });
+  } else if (1 <= Number(request.channel) && Number(request.channel) <= 12) {
+    control.channel(`${Number(request.channel)}1`, (err, data) => {
+      console.log("Set channel " + String(request.channel));
+      console.log(data);
+      res.send("Set channel " + String(request.channel));
+      return;
+    });
+  } else if (String(request.channel).match(/^\d{3}$/g)) {
+    control.channel(String(request.channel), (err, data) => {
+      console.log("Set channel " + String(request.channel));
+      res.send("Set channel " + String(request.channel));
+      return;
+    });
+  } else if (request.channel == "up") {
+    control.channelUp(() => {
+      console.log("Channel up");
+      res.sendStatus(200);
+      return;
+    });
+  } else if (request.channel == "down") {
+    control.channelDown(() => {
+      console.log("Channel down");
+      res.sendStatus(200);
+      return;
+    });
+  }
+
+  if (request.volume == "check") {
+    control.volume(null, (err, data) => {
+      console.log("Return volume status");
+      console.log(typeof data);
+      res.send(String(Number(data)));
+      return;
+    });
+  } else if (0 <= Number(request.volume) && Number(request.volume) <= 100) {
+    control.volume(String(request.volume), (err, data) => {
+      console.log("Set volume " + String(request.volume));
+      res.send("Set volume " + String(request.volume));
+      return;
+    });
+  } else if (request.volume == "up") {
+    control.volume(null, (err, data) => {
+      control.volume(Number(data)+1, (err, data2) => {
+        console.log("Set volume " + String(Number(data)+1));
+        res.send("Set volume " + String(Number(data)+1));
+        return;
+      })
+    });
+  } else if (request.volume == "down") {
+    control.volume(null, (err, data) => {
+      control.volume(Number(data)-1, (err, data2) => {
+        console.log("Set volume " + String(Number(data)-1));
+        res.send("Set volume " + String(Number(data)-1));
+        return;
+      })
+    });
+  }
+
+  if (request.input == "check") {
+    control.input(null, (err, data) => {
+      console.log("Return input status");
+      console.log(data);
+      res.send(String(Number(data)));
+      return;
+    });
+  } else if (1 <= Number(request.input) && Number(request.input) <= 5) {
+    control.input(Number(request.input), (err, data) => {
+      console.log("Set input " + String(request.input));
+      res.send("Set input " + String(request.input));
+      return;
+    });
+  }
+});
 
 // 電源をつける操作のエンドポイント
 app.get("/power", (req, res) => {
