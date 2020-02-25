@@ -22,7 +22,7 @@ app.post("/", (req, res, next) => {
     channel: req.body.channel,
     input: req.body.input
   }
-  if (power == "check") {
+  if (request.power == "check") {
     control.power(null, (err, data) => {
       console.log("Return power status");
       console.log(data);
