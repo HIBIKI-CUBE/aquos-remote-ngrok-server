@@ -228,7 +228,7 @@ app.get("/volume", (req, res) => {
   } else {
     control.volume(null, (err, data) => {
       console.log("Return volume status");
-      console.log(typeof data);
+      console.log(data);
       res.send(String(Number(data)));
       return;
     });
