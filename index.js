@@ -127,7 +127,7 @@ app.get("/input", (req, res) => {
       console.log(data);
       res.send(String(Number(data)));
       return;
-    })
+    });
   }
 })
 
