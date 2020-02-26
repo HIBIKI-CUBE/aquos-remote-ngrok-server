@@ -14,13 +14,28 @@ const control = new Aquos(
   config.pass
 );
 
-app.post("/", (req, res, next) => {
-  console.log(req.body.v);
+control.connect(err => {
+  if (err) {
+    console.log(err);
+    return;
+  }
+});
+
+function checkVolume(res) {
+  control.volume(null, (err, data) => {
+    console.log("Return volume status");
+    console.log(data);
+    res.send(String(Number(data)));
+  });
+}
+
+app.post("/", (req, res) => {
   const request = {
     power: req.body.power,
     volume: req.body.volume,
     channel: req.body.channel,
-    input: req.body.input
+    input: req.body.input,
+    value: req.body.value
   }
   if (request.power == "check") {
     control.power(null, (err, data) => {
@@ -29,7 +44,7 @@ app.post("/", (req, res, next) => {
       res.send(String(Number(data)));
       return;
     });
-  } else if (request.power = "on") {
+  } else if (request.power == "on") {
     control.power(true, (err, data) => {
       console.log("Power on");
       res.sendStatus("202");
@@ -87,12 +102,8 @@ app.post("/", (req, res, next) => {
   }
 
   if (request.volume == "check") {
-    control.volume(null, (err, data) => {
-      console.log("Return volume status");
-      console.log(data);
-      res.send(String(Number(data)));
-      return;
-    });
+    checkVolume(res);
+    return;
   } else if (0 <= Number(request.volume) && Number(request.volume) <= 100) {
     control.volume(String(request.volume), (err, data) => {
       console.log("Set volume " + String(request.volume));
@@ -100,18 +111,20 @@ app.post("/", (req, res, next) => {
       return;
     });
   } else if (request.volume == "up") {
+    const value = Number(request.value) ? Number(request.value) : 1;
     control.volume(null, (err, data) => {
-      control.volume(Number(data)+1, (err, data2) => {
-        console.log("Set volume " + String(Number(data)+1));
-        res.send("Set volume " + String(Number(data)+1));
+      control.volume(Number(data)+value, (err, data2) => {
+        console.log("Set volume " + String(Number(data)+value));
+        res.send("Set volume " + String(Number(data)+value));
         return;
       })
     });
   } else if (request.volume == "down") {
+    const value = Number(request.value) ? Number(request.value) : 1;
     control.volume(null, (err, data) => {
-      control.volume(Number(data)-1, (err, data2) => {
-        console.log("Set volume " + String(Number(data)-1));
-        res.send("Set volume " + String(Number(data)-1));
+      control.volume(Number(data)-value, (err, data2) => {
+        console.log("Set volume " + String(Number(data)-value));
+        res.send("Set volume " + String(Number(data)-value));
         return;
       })
     });
@@ -226,12 +239,8 @@ app.get("/volume", (req, res) => {
       })
     });
   } else {
-    control.volume(null, (err, data) => {
-      console.log("Return volume status");
-      console.log(data);
-      res.send(String(Number(data)));
-      return;
-    });
+    checkVolume(res);
+    return;
   }
 });
 
@@ -258,10 +267,4 @@ const server = app.listen(55555, () => {
     port = server.address().port;
 
   console.log("listening at http://%s:%s", host, port);
-  control.connect(err => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-  });
 });
