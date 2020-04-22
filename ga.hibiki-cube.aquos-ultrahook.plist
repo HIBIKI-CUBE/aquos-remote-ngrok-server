@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>ga.hibiki-cube.aquos-ultrahook</string>
+    <key>RunAtLoad</key>
+        <true/>
+    <key>KeepAlive</key>
+        <true/>
+    <key>ProgramArguments</key>
+    <array>
+      <string>ultrahook</string>
+      <string>aquos</string>
+      <string>55555</string>
+    </array>
+    <key>StandardOutPath</key>
+    <string>/var/log/aquos-hub/ultrahook.log</string>
+    <key>StandardErrorPath</key>
+    <string>/var/log/aquos-hub/ultrahook.log</string>
+  </dict>
+</plist>

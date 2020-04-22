@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>ga.hibiki-cube.aquos-remote-server</string>
+    <key>RunAtLoad</key>
+        <true/>
+    <key>KeepAlive</key>
+        <true/>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/Users/hibiki/.nodebrew/current/bin/node</string>
+      <string>/Users/hibiki/Development/Aquos Hub/aquos-remote-server/index.js</string>
+    </array>
+    <key>StandardOutPath</key>
+    <string>/var/log/aquos-hub/aquos-remote-server.log</string>
+    <key>StandardErrorPath</key>
+    <string>/var/log/aquos-hub/aquos-remote-server.log</string>
+  </dict>
+</plist>
