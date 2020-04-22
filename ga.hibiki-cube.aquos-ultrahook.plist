@@ -13,7 +13,7 @@
       <string>ultrahook</string>
       <string>aquos</string>
       <string>55555</string>
-    </array>
+    </array>
     <key>StandardOutPath</key>
     <string>/var/log/aquos-hub/ultrahook.log</string>
     <key>StandardErrorPath</key>
