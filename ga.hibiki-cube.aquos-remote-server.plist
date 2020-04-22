@@ -9,7 +9,7 @@
     <key>KeepAlive</key>
         <true/>
     <key>WorkingDirectory</key>
-    <string>/Users/hibiki</string>
+    <string>/Users/hibiki/Development/Aquos Hub/aquos-remote-server/</string>
     <key>UserName</key>
     <string>hibiki</string>
     <key>ProgramArguments</key>
