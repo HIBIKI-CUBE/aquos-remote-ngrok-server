@@ -8,6 +8,10 @@
         <true/>
     <key>KeepAlive</key>
         <true/>
+    <key>WorkingDirectory</key>
+    <string>/Users/hibiki</string>
+    <key>UserName</key>
+    <string>hibiki</string>
     <key>ProgramArguments</key>
     <array>
       <string>/Users/hibiki/.nodebrew/current/bin/node</string>
