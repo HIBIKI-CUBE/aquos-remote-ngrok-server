@@ -14,7 +14,7 @@
     <string>hibiki</string>
     <key>ProgramArguments</key>
     <array>
-      <string>ultrahook</string>
+      <string>/usr/local/bin/ultrahook</string>
       <string>aquos</string>
       <string>55555</string>
     </array>
