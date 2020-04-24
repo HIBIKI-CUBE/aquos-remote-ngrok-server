@@ -1,25 +1,30 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
-    <key>Label</key>
-    <string>ga.hibiki-cube.aquos-remote-server</string>
     <key>RunAtLoad</key>
-        <true/>
+      <true/>
     <key>KeepAlive</key>
-        <true/>
-    <key>WorkingDirectory</key>
-    <string>/Users/hibiki/Development/Aquos Hub/aquos-remote-server/</string>
-    <key>UserName</key>
-    <string>hibiki</string>
+      <true/>
+    <key>Label</key>
+      <string>ga.hibiki-cube.aquos-remote-server</string>
     <key>ProgramArguments</key>
-    <array>
-      <string>/Users/hibiki/.nodebrew/current/bin/node</string>
-      <string>/Users/hibiki/Development/Aquos Hub/aquos-remote-server/index.js</string>
-    </array>
+      <array>
+        <string>/Users/hibiki/.nodebrew/current/bin/node</string>
+        <string>/Users/hibiki/Development/Aquos Hub/aquos-remote-server/index.js</string>
+      </array>
+    <key>WorkingDirectory</key>
+      <string>/Users/hibiki/Development/Aquos Hub/aquos-remote-server</string>
     <key>StandardOutPath</key>
-    <string>/var/log/aquos-hub/aquos-remote-server.log</string>
+      <string>/var/log/aquos-hub/aquos-remote-server.log</string>
     <key>StandardErrorPath</key>
-    <string>/var/log/aquos-hub/aquos-remote-server.log</string>
+      <string>/var/log/aquos-hub/aquos-remote-server.log</string>
+    <key>EnvironmentVariables</key>
+      <dict>
+        <key>PATH</key>
+          <string>/usr/local/bin:/Users/hibiki/.nodebrew/current/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+        <key>HOME</key>
+          <string>/Users/hibiki</string>
+      </dict>
   </dict>
 </plist>
